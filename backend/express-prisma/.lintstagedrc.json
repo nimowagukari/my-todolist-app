@@ -1,0 +1,4 @@
+{
+  "*.{js,ts}": ["prettier -l", "eslint"],
+  "*.{json,md}": "prettier -l"
+}
