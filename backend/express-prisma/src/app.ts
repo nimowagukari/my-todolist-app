@@ -11,7 +11,6 @@ const logger = (
     timestamp: new Date().toISOString(),
     path: req.url,
     method: req.method,
-    headers: req.headers,
   };
   console.log(JSON.stringify(logLine));
   next();

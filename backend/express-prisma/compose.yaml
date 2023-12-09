@@ -1,0 +1,9 @@
+services:
+  app:
+    build:
+      context: ../../
+      dockerfile: backend/express-prisma/docker/Dockerfile
+    environment:
+      DATABASE_URL: postgresql://app:App1!@host.docker.internal:5432/app
+    ports:
+      - "80:3000"

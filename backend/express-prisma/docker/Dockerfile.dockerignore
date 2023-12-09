@@ -1,0 +1,6 @@
+/*
+!/backend/express-prisma
+/backend/express-prisma/.env
+/backend/express-prisma/dist
+/backend/express-prisma/docker
+/backend/express-prisma/node_modules
