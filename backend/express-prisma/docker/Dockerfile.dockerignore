@@ -4,3 +4,4 @@
 /backend/express-prisma/dist
 /backend/express-prisma/docker
 /backend/express-prisma/node_modules
+/backend/express-prisma/terraform
