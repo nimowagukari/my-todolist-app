@@ -1,0 +1,22 @@
+{
+  "family": "todolist-backend-express-prisma",
+  "requiresCompatibilities": ["FARGATE"],
+  "executionRoleArn": "${EXECUTION_ROLE_ARN}",
+  "networkMode": "awsvpc",
+  "cpu": "256",
+  "memory": "512",
+  "taskRoleArn": "${TASK_ROLE_ARN}",
+  "containerDefinitions": [
+    {
+      "name": "app",
+      "image": "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/todolist/backend/express-prisma:latest",
+      "portMappings": [{ "containerPort": 3000 }],
+      "secrets": [
+        {
+          "name": "DATABASE_URL",
+          "valueFrom": "${SSM_PARAM_ARN}"
+        }
+      ]
+    }
+  ]
+}
