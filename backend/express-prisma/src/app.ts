@@ -21,7 +21,11 @@ app.set("strict routing", true);
 app.use(express.json());
 app.use(logger);
 
-app.get("/tasks", async (req, res) => {
+app.get("/api/health", async (req, res) => {
+  res.status(200).json({ method: req.method, url: req.url });
+});
+
+app.get("/api/tasks", async (req, res) => {
   try {
     const tasks = await prisma.task.findMany();
     res.status(200).json({ method: req.method, url: req.url, data: tasks });
@@ -30,7 +34,7 @@ app.get("/tasks", async (req, res) => {
   }
 });
 
-app.post("/tasks", async (req, res) => {
+app.post("/api/tasks", async (req, res) => {
   try {
     const task = await prisma.task.create({
       data: req.body,
@@ -41,7 +45,7 @@ app.post("/tasks", async (req, res) => {
   }
 });
 
-app.get("/tasks/:taskId(\\d+)", async (req, res) => {
+app.get("/api/tasks/:taskId(\\d+)", async (req, res) => {
   try {
     const task = await prisma.task.findUniqueOrThrow({
       where: { id: Number(req.params["taskId"]) },
@@ -52,7 +56,7 @@ app.get("/tasks/:taskId(\\d+)", async (req, res) => {
   }
 });
 
-app.put("/tasks/:taskId(\\d+)", async (req, res) => {
+app.put("/api/tasks/:taskId(\\d+)", async (req, res) => {
   try {
     const task = await prisma.task.update({
       where: { id: Number(req.params["taskId"]) },
@@ -64,7 +68,7 @@ app.put("/tasks/:taskId(\\d+)", async (req, res) => {
   }
 });
 
-app.delete("/tasks/:taskId(\\d+)", async (req, res) => {
+app.delete("/api/tasks/:taskId(\\d+)", async (req, res) => {
   try {
     const task = await prisma.task.delete({
       where: { id: Number(req.params["taskId"]) },

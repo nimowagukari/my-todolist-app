@@ -16,9 +16,16 @@ afterAll(async () => {
   await prisma.task.deleteMany({});
 });
 
+describe("health check", () => {
+  test("return 200 OK", async () => {
+    const response = await request(app).get("/api/health");
+    expect(response.status).toEqual(200);
+  });
+});
+
 describe("list tasks when empty data", () => {
   test("empty data", async () => {
-    const response = await request(app).get("/tasks");
+    const response = await request(app).get("/api/tasks");
     expect(response.headers["content-type"]).toMatch(
       new RegExp("application/json"),
     );
@@ -35,7 +42,7 @@ describe("create, list, get tasks", () => {
       description: "d1",
       status: "not_started_yet",
     };
-    const response = await request(app).post("/tasks").send(data);
+    const response = await request(app).post("/api/tasks").send(data);
     expect(response.headers["content-type"]).toMatch(
       new RegExp("application/json"),
     );
@@ -44,7 +51,7 @@ describe("create, list, get tasks", () => {
   });
 
   test("list 1 data", async () => {
-    const response = await request(app).get("/tasks");
+    const response = await request(app).get("/api/tasks");
     expect(response.headers["content-type"]).toMatch(
       new RegExp("application/json"),
     );
@@ -53,7 +60,7 @@ describe("create, list, get tasks", () => {
   });
 
   test("get 1 data", async () => {
-    const response = await request(app).get(`/tasks/${task_id}`);
+    const response = await request(app).get(`/api/tasks/${task_id}`);
     expect(response.headers["content-type"]).toMatch(
       new RegExp("application/json"),
     );
@@ -70,7 +77,7 @@ describe("update and delete tasks", () => {
   };
 
   test("update task", async () => {
-    const response = await request(app).put(`/tasks/${task_id}`).send(data);
+    const response = await request(app).put(`/api/tasks/${task_id}`).send(data);
     expect(response.headers["content-type"]).toMatch(
       new RegExp("application/json"),
     );
@@ -78,7 +85,7 @@ describe("update and delete tasks", () => {
   });
 
   test("get 1 updated data", async () => {
-    const response = await request(app).get(`/tasks/${task_id}`);
+    const response = await request(app).get(`/api/tasks/${task_id}`);
     expect(response.headers["content-type"]).toMatch(
       new RegExp("application/json"),
     );
@@ -90,7 +97,7 @@ describe("update and delete tasks", () => {
   });
 
   test("delete data", async () => {
-    const response = await request(app).delete(`/tasks/${task_id}`);
+    const response = await request(app).delete(`/api/tasks/${task_id}`);
     expect(response.headers["content-type"]).toMatch(
       new RegExp("application/json"),
     );
